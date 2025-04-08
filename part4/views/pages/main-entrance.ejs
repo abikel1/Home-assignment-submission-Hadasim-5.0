@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת ניהול מכולת - דף כניסה</title>
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #f9a825;
+            --light-color: #f1f8e9;
+            --dark-color: #1b5e20;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4e157' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .logo-container {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background-color: var(--secondary-color);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: rotate(45deg);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .login-option {
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            height: 220px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-option:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-color);
+        }
+
+        .login-option.supplier {
+            background-color: var(--light-color);
+        }
+
+        .login-option.owner {
+            background-color: #fff8e1;
+        }
+
+        .login-option:before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--secondary-color);
+            border-radius: 30%;
+            opacity: 0.2;
+        }
+
+        .login-option.supplier:after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background-color: var(--primary-color);
+            border-radius: 40%;
+            opacity: 0.1;
+        }
+
+        .login-option.owner:after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            width: 100px;
+            height: 100px;
+            background-color: var(--secondary-color);
+            border-radius: 40%;
+            opacity: 0.1;
+        }
+
+        .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            background-color: rgba(255, 255, 255, 0.8);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-option.supplier .icon {
+            color: var(--dark-color);
+        }
+
+        .login-option.owner .icon {
+            color: #f57f17;
+        }
+
+        .login-option h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .login-option p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-color);
+        }
+
+        .login-option.supplier .btn {
+            background-color: var(--dark-color);
+        }
+
+        .login-option.owner .btn {
+            background-color: #f57f17;
+        }
+
+        .login-option.supplier .btn:hover {
+            background-color: #0d3c10;
+        }
+
+        .login-option.owner .btn:hover {
+            background-color: #bc5100;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        /* Icons */
+        .fa-box,
+        .fa-store {
+            font-size: 2.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .login-option {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <script>
+        // פונקציות להפעלת כפתורי הכניסה
+        document.addEventListener('DOMContentLoaded', function () {
+            // כפתור כניסת ספק
+            document.querySelector('.login-option.supplier .btn').addEventListener('click', function () {
+                // ניתוב לדף התחברות ספק
+                window.location.href = '/supplier-login';
+            });
+
+            // כפתור כניסת בעל מכולת
+            document.querySelector('.login-option.owner .btn').addEventListener('click', function () {
+                // ניתוב לדף התחברות בעל מכולת
+                window.location.href = '/grocer-login';
+            });
+
+            // הוספת אנימציה לכרטיסי הכניסה
+            const loginOptions = document.querySelectorAll('.login-option');
+            loginOptions.forEach(option => {
+                option.addEventListener('mouseenter', function () {
+                    this.style.transform = 'translateY(-10px)';
+                    this.style.boxShadow = '0 10px 20px rgba(0,0,0,0.2)';
+                });
+
+                option.addEventListener('mouseleave', function () {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+                });
+
+                option.addEventListener('click', function () {
+                    // בדיקה אם זה כרטיס ספק
+                    if (this.classList.contains('supplier')) {
+                        // ניתוב ישירות לדף התחברות ספק
+                        window.location.href = '/supplier-login';
+                    } else {
+                        // עבור כרטיסים אחרים, הפעל את הכפתור
+                        const button = this.querySelector('.btn');
+                        if (button) {
+                            button.click();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">מ</div>
+            </div>
+            <h1>ברוכים הבאים למערכת ניהול המכולת</h1>
+            <p>בחר את סוג המשתמש שלך כדי להתחבר למערכת</p>
+        </div>
+
+        <div class="content">
+            <div class="buttons-container">
+                <div class="login-option supplier">
+                    <div class="icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <h2>כניסת ספק</h2>
+                    <p>לניהול מלאי, הזמנות והפצה</p>
+                    <button class="btn">התחבר כספק</button>
+                </div>
+
+                <div class="login-option owner">
+                    <div class="icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h2>כניסת בעל מכולת</h2>
+                    <p>לניהול חנות, מלאי ומכירות</p>
+                    <button class="btn">התחבר כבעל מכולת</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            © 2025 מערכת ניהול המכולת - כל הזכויות שמורות
+        </div>
+    </div>
+</body>
+
+</html>

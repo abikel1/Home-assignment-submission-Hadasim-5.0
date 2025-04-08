@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>כניסת בעל מכולת - מערכת ניהול</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+            :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #f9a825;
+            --light-color: #f1f8e9;
+            --dark-color: #1b5e20;
+            --shadow: 0 4px 8px rgba(0,0,0,0.2);
+            --error-color: #d32f2f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4e157' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        .logo-container {
+            width: 70px;
+            height: 70px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px;
+            box-shadow: var(--shadow);
+        }
+        
+        .logo {
+            width: 50px;
+            height: 50px;
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: rotate(45deg);
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .form-container {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group:last-child {
+            margin-bottom: 10px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #555;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+            outline: none;
+        }
+        
+        .form-group .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 38px;
+            color: #777;
+        }
+        
+        .form-group.error input {
+            border-color: var(--error-color);
+            background-color: #fff8f8;
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .form-group.error .error-message {
+            display: block;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--dark-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            margin: 25px 0 10px;
+        }
+        
+        .btn:hover {
+            background-color: #1a4c19;
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--dark-color);
+            border: 1px solid var(--dark-color);
+            font-weight: 500;
+            margin-top: 15px;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #f1f8e9;
+        }
+        
+        .form-footer {
+            text-align: center;
+            padding: 5px 0 15px;
+            color: #777;
+            font-size: 0.85rem;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #777;
+            font-size: 0.85rem;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: #ddd;
+        }
+        
+        .divider::before {
+            margin-left: 10px;
+        }
+        
+        .divider::after {
+            margin-right: 10px;
+        }
+        
+        .supplier-badge {
+            display: inline-block;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .back-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .back-link a i {
+            margin-left: 5px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 10px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">מ</div>
+            </div>
+            <div class="supplier-badge">כניסת בעל מכולת</div>
+            <h1>התחברות לניהול המכולת</h1>
+            <p>הזן את הסיסמה כדי להיכנס</p>
+        </div>
+
+        <div class="form-container">
+            <form id="groceryLoginForm">
+                <div class="form-group" id="passwordGroup">
+                    <label for="groceryPassword">סיסמה</label>
+                    <input type="password" id="groceryPassword" placeholder="הזן את הסיסמה" required>
+                    <i class="fas fa-lock input-icon"></i>
+                    <div class="error-message">סיסמה שגויה</div>
+                </div>
+
+                <button type="submit" class="btn">התחברות</button>
+
+                <div class="back-link">
+                    <a href="/"><i class="fas fa-arrow-right"></i> חזרה לדף הראשי</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('groceryLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const correctPassword = "1234";
+            const inputPassword = document.getElementById("groceryPassword").value;
+            const passwordGroup = document.getElementById("passwordGroup");
+            const errorMessage = passwordGroup.querySelector('.error-message');
+
+            if (inputPassword === correctPassword) {
+                // סיסמה נכונה - מעבירים לעמוד של בעל המכולת
+                window.location.href = "/grocery/dashboard";
+            } else {
+                // סיסמה שגויה
+                passwordGroup.classList.add("error");
+                errorMessage.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>

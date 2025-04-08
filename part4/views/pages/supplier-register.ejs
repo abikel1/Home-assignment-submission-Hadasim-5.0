@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הרשמת ספק חדש - מערכת ניהול מכולת</title>
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #f9a825;
+            --light-color: #f1f8e9;
+            --dark-color: #1b5e20;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            --error-color: #d32f2f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4e157' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .logo-container {
+            width: 70px;
+            height: 70px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: rotate(45deg);
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .form-container {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #555;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+            outline: none;
+        }
+
+        .form-group .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 38px;
+            color: #777;
+        }
+
+        .form-group.error input {
+            border-color: var(--error-color);
+            background-color: #fff8f8;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--dark-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            margin: 25px 0 10px;
+        }
+
+        .btn:hover {
+            background-color: #1a4c19;
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .back-link a i {
+            margin-left: 5px;
+        }
+
+        .products-section {
+            margin-bottom: 20px;
+        }
+
+        .products-list {
+            margin-top: 10px;
+        }
+
+        .product-row {
+            margin-bottom: 10px;
+        }
+
+        .product-details {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .product-details input {
+            flex: 1;
+        }
+
+        .remove-product-btn {
+            background-color: var(--error-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .remove-product-btn:hover {
+            background-color: #b71c1c;
+        }
+
+        .product-details input {
+            flex: 1;
+            font-size: 0.9rem;
+            /* הקטנת גודל הפונט */
+            padding: 8px 12px;
+            /* הקטנת הפדינג */
+        }
+
+        .product-details input::placeholder {
+            font-size: 0.85rem;
+            /* הקטנת גודל הפלייסהולדר */
+        }
+
+        .remove-product-btn {
+            padding: 8px;
+            /* הקטנת הפדינג של כפתור המחיקה */
+            font-size: 0.9rem;
+            /* הקטנת גודל הפונט */
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 10px;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">מ</div>
+            </div>
+            <h1>הרשמת ספק חדש</h1>
+            <p>הזן את הפרטים שלך להצטרפות למערכת</p>
+        </div>
+
+        <div class="form-container">
+            <form id="supplierRegistrationForm" action="/supplier/register" method="POST">
+                <div class="form-group">
+                    <label for="companyName">שם החברה</label>
+                    <input type="text" id="companyName" name="companyName" placeholder="הזן את שם החברה" required>
+                    <i class="fas fa-building input-icon"></i>
+                    <div class="error-message">נא להזין שם חברה תקין</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phoneNumber">מספר טלפון</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="הזן מספר טלפון" required>
+                    <i class="fas fa-phone input-icon"></i>
+                    <div class="error-message">נא להזין מספר טלפון תקין</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="representativeName">שם הנציג</label>
+                    <input type="text" id="representativeName" name="representativeName" placeholder="הזן את שם הנציג"
+                        required>
+                    <i class="fas fa-user input-icon"></i>
+                    <div class="error-message">נא להזין שם נציג תקין</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">סיסמה</label>
+                    <input type="password" id="password" name="password" placeholder="הזן סיסמה" required>
+                    <i class="fas fa-lock input-icon"></i>
+                    <div class="error-message">נא להזין סיסמה תקינה</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">אימות סיסמה</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="אמת סיסמה" required>
+                    <i class="fas fa-lock input-icon"></i>
+                    <div class="error-message">הסיסמאות אינן תואמות</div>
+                </div>
+                <div class="form-group products-section">
+                    <label>מוצרים</label>
+                    <button type="button" class="btn btn-secondary" id="addProductBtn">
+                        <i class="fas fa-plus"></i> הוסף מוצר
+                    </button>
+
+                    <div id="productsContainer" class="products-list">
+                        <!-- מוצרים יופיעו כאן -->
+                    </div>
+                </div>
+                <button type="submit" class="btn" id="registerBtn">הרשמה</button>
+            </form>
+
+            <div class="back-link">
+                <a href="/supplier-login"><i class="fas fa-arrow-right"></i> חזרה להתחברות</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('supplierRegistrationForm');
+            const registerBtn = document.getElementById('registerBtn');
+            const addProductBtn = document.getElementById('addProductBtn');
+            const productsContainer = document.getElementById('productsContainer');
+            let productCounter = 0;
+
+            // פונקציה ליצירת שורת מוצר חדשה
+            function createProductRow() {
+                productCounter++;
+                const productRow = document.createElement('div');
+                productRow.className = 'product-row';
+                productRow.dataset.productId = productCounter; // שמירת מזהה ייחודי לכל שורה
+                productRow.innerHTML = `
+            <div class="product-details">
+                <input type="text" name="productName" class="product-name" placeholder="שם המוצר" required>
+                <input type="number" name="productPrice" class="product-price" placeholder="מחיר" min="0" step="0.01" required>
+                <input type="number" name="minQuantity" class="product-min-quantity" placeholder="כמות מינימלית" min="1" required>
+                <button type="button" class="remove-product-btn" aria-label="מחק מוצר">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </div>
+        `;
+
+                // מאזין אירועים למחיקת המוצר
+                const removeBtn = productRow.querySelector('.remove-product-btn');
+                removeBtn.addEventListener('click', function () {
+                    productsContainer.removeChild(productRow);
+                });
+
+                return productRow;
+            }
+
+            // הוספת מוצר חדש
+            addProductBtn.addEventListener('click', function () {
+                const newProductRow = createProductRow();
+                productsContainer.appendChild(newProductRow);
+            });
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // איסוף נתונים
+                const companyName = document.getElementById('companyName').value;
+                const phoneNumber = document.getElementById('phoneNumber').value;
+                const representativeName = document.getElementById('representativeName').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                // איסוף נתוני מוצרים - שיטה מתוקנת
+                const products = [];
+                const productRows = productsContainer.querySelectorAll('.product-row');
+
+                productRows.forEach((row) => {
+                    const productName = row.querySelector('.product-name').value;
+                    const productPrice = parseFloat(row.querySelector('.product-price').value);
+                    const minQuantity = parseInt(row.querySelector('.product-min-quantity').value);
+
+                    products.push({
+                        productName,
+                        productPrice,
+                        minQuantity
+                    });
+                });
+
+                console.log('מספר המוצרים שנאספו:', products.length);
+                console.log('פרטי המוצרים:', JSON.stringify(products));
+
+                // איפוס שגיאות
+                const formGroups = form.querySelectorAll('.form-group');
+                formGroups.forEach(group => group.classList.remove('error'));
+
+                // אם כל הנתונים תקינים
+                if (true) {
+                    // הצגת אנימציית טעינה
+                    registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> מבצע הרשמה...';
+                    registerBtn.disabled = true;
+
+                    // בניית אובייקט נתונים לשליחה
+                    const supplierData = {
+                        companyName,
+                        phoneNumber,
+                        representativeName,
+                        password,
+                        confirmPassword,
+                        products
+                    };
+                    console.log('נתונים שנשלחים לשרת:', JSON.stringify(supplierData));
+
+                    // שליחת בקשת הרשמה לשרת
+                    fetch('/supplier/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(supplierData)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showSuccessMessage();
+                            } else {
+                                // טיפול בשגיאה מהשרת
+                                alert(data.error);
+                                registerBtn.innerHTML = 'הרשמה';
+                                registerBtn.disabled = false;
+                            }
+                        })
+                        .catch(error => {
+                            console.error('שגיאה:', error);
+                            alert('אירעה שגיאה בהרשמה');
+                            registerBtn.innerHTML = 'הרשמה';
+                            registerBtn.disabled = false;
+                        });
+                }
+            });
+            // פונקציה להצגת הודעת הצלחה 
+            function showSuccessMessage() {
+                // יצירת הודעת הצלחה
+                const messageBox = document.createElement('div');
+                messageBox.style.position = 'fixed';
+                messageBox.style.top = '50%';
+                messageBox.style.left = '50%';
+                messageBox.style.transform = 'translate(-50%, -50%)';
+                messageBox.style.backgroundColor = 'white';
+                messageBox.style.padding = '20px';
+                messageBox.style.borderRadius = '10px';
+                messageBox.style.boxShadow = '0 0 20px rgba(0,0,0,0.3)';
+                messageBox.style.zIndex = '1000';
+                messageBox.style.minWidth = '300px';
+                messageBox.style.textAlign = 'center';
+                messageBox.style.direction = 'rtl';
+
+                const title = document.createElement('h3');
+                title.textContent = 'הרשמה הצליחה!';
+                title.style.marginBottom = '15px';
+                title.style.color = '#2e7d32';
+
+                const message = document.createElement('p');
+                message.textContent = 'ברוכים הבאים למערכת ניהול המכולת';
+                message.style.marginBottom = '20px';
+
+                const checkmark = document.createElement('div');
+                checkmark.innerHTML = '✓';
+                checkmark.style.color = '#4CAF50';
+                checkmark.style.fontSize = '50px';
+                checkmark.style.fontWeight = 'bold';
+                checkmark.style.marginBottom = '20px';
+
+                const continueButton = document.createElement('button');
+                continueButton.textContent = 'המשך להתחברות';
+                continueButton.style.padding = '10px 15px';
+                continueButton.style.backgroundColor = '#2e7d32';
+                continueButton.style.color = 'white';
+                continueButton.style.border = 'none';
+                continueButton.style.borderRadius = '5px';
+                continueButton.style.cursor = 'pointer';
+                continueButton.style.fontSize = '0.9rem';
+                continueButton.style.fontWeight = 'bold';
+
+                continueButton.addEventListener('click', function () {
+                    event.preventDefault();
+                    document.body.removeChild(overlay);
+                    document.body.removeChild(messageBox);
+
+                    // ניתוב לדף ההתחברות
+                    window.location.href = '/supplier-login';
+                });
+
+                messageBox.appendChild(checkmark);
+                messageBox.appendChild(title);
+                messageBox.appendChild(message);
+                messageBox.appendChild(continueButton);
+
+                const overlay = document.createElement('div');
+                overlay.style.position = 'fixed';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100%';
+                overlay.style.height = '100%';
+                overlay.style.backgroundColor = 'rgba(0,0,0,0.5)';
+                overlay.style.zIndex = '999';
+
+                document.body.appendChild(overlay);
+                document.body.appendChild(messageBox);
+
+                // איפוס הכפתור
+                registerBtn.innerHTML = 'הרשמה';
+                registerBtn.disabled = false;
+
+                // איפוס הטופס
+                form.reset();
+            }
+        });
+    </script>

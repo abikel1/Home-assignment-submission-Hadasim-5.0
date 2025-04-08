@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דשבורד ספק <%= supplierName %> - מכולת הפינה</title>
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #f9a825;
+            --light-color: #f1f8e9;
+            --dark-color: #1b5e20;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            --error-color: #d32f2f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4e157' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background-color: var(--secondary-color);
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: rotate(45deg);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+        }
+
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 1rem;
+            cursor: pointer;
+            position: relative;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background-color: #f0f0f0;
+            color: var(--primary-color);
+        }
+
+        .nav-item.active {
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .card-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .card-content {
+            margin-bottom: 1rem;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--dark-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1a4c19;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-accent {
+            background-color: var(--secondary-color);
+            color: #333;
+        }
+
+        .btn-accent:hover {
+            background-color: #f0a000;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--dark-color);
+            border: 1px solid var(--dark-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #f1f8e9;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: flex-start;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .orders-list {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .orders-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .orders-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 0.8rem;
+            text-align: right;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .status {
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background-color: #f9a825;
+            color: #333;
+        }
+
+        .status-approved {
+            background-color: #2e7d32;
+            color: white;
+        }
+
+        .status-delivered {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+            outline: none;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .supplier-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .supplier-item:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .supplier-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .supplier-details {
+            flex: 1;
+        }
+
+        .supplier-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: #333;
+        }
+
+        .supplier-category {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-left: 10px;
+            color: var(--primary-color);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .back-link i {
+            margin-left: 5px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-list {
+                flex-wrap: wrap;
+            }
+
+            th,
+            td {
+                padding: 0.5rem;
+            }
+        }
+
+        .product-message {
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .product-message.success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        .product-message.error {
+            background-color: #ffebee;
+            color: #d32f2f;
+            border: 1px solid #ef9a9a;
+        }
+
+        /* עיצוב פאנל הזמנות */
+
+        /* סינון ההזמנות */
+        .filter-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            background-color: #f9f9f9;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .filter-btn.active {
+            background-color: #4a90e2;
+            color: white;
+            border-color: #4a90e2;
+        }
+
+        .search-container {
+            position: relative;
+            width: 220px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 0.5rem 2rem 0.5rem 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        /* טבלת הזמנות */
+        .orders-table-container {
+            overflow-x: auto;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .orders-table th,
+        .orders-table td {
+            padding: 0.75rem;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+        }
+
+        .orders-table th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+            color: #333;
+            position: sticky;
+            top: 0;
+        }
+
+        .orders-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .order-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-processing {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+
+        .status-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-cancelled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            color: #4a90e2;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .action-btn:hover {
+            color: #2c6cb9;
+        }
+
+        .action-btn.view-btn {
+            color: #4a90e2;
+        }
+
+        .action-btn.approve-btn {
+            color: #28a745;
+        }
+
+        /* מצב טעינה */
+        .loading-spinner {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .loading-row td {
+            text-align: center;
+        }
+
+        /* הודעות */
+        .no-data-message,
+        .error-message {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+
+        .no-data-message i,
+        .error-message i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .error-message {
+            color: #721c24;
+            background-color: #f8d7da;
+        }
+
+        /* מודאל פרטי הזמנה */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 0;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .close-modal {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .order-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .order-meta-item {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .order-meta-item .label {
+            font-weight: bold;
+        }
+
+        .order-items-container {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .order-items-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .order-items-table th,
+        .order-items-table td {
+            padding: 0.75rem;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-items-table th {
+            background-color: #f5f5f5;
+        }
+
+        .total-label {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .total-amount {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .modal-footer {
+            padding: 1rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #orderActionButtons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-approve {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-approve:hover {
+            background-color: #218838;
+        }
+
+        /* עבור מסכים קטנים */
+        @media screen and (max-width: 768px) {
+            .filter-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-container {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+            }
+        }
+
+        .orders-table-container {
+            overflow-x: auto;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .orders-table th,
+        .orders-table td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .orders-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .orders-table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .view-details-btn {
+            padding: 5px 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .order-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .order-meta-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .order-meta-item .label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .order-items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .order-items-table th,
+        .order-items-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-items-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .total-label {
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .total-amount {
+            font-weight: bold;
+        }
+
+        .no-data-message,
+        .error-message {
+            text-align: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .no-data-message i,
+        .error-message i {
+            font-size: 48px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .error-message i {
+            color: #dc3545;
+        }
+
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            font-size: 24px;
+            color: #888;
+        }
+
+        .loading-spinner i {
+            margin-right: 10px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-container">
+                <div class="logo-icon">מ</div>
+            </div>
+            מכולת הפינה - ספק <%= supplierName %>
+        </div>
+    </header>
+
+    <nav>
+        <ul class="nav-list">
+            <li class="nav-item active" onclick="showPanel('add-product')">
+                <i class="fas fa-plus-circle"></i> הוספת מוצרים
+            </li>
+            <li class="nav-item" onclick="showPanel('supplier-orders')">
+                <i class="fas fa-clipboard-list"></i> הזמנות
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <div id="add-product" class="panel">
+            <div class="section-title">
+                <i class="fas fa-plus-circle"></i> הוספת מוצר חדש
+            </div>
+
+            <div class="panel-content">
+                <form id="addProductForm" class="product-form">
+                    <div class="form-group">
+                        <label for="productName">שם המוצר</label>
+                        <input type="text" id="productName" name="productName" placeholder="הזן את שם המוצר" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productPrice">מחיר ליחידה (₪)</label>
+                        <input type="number" id="productPrice" name="productPrice" step="0.01" min="0.01"
+                            placeholder="הזן את המחיר" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="minQuantity">כמות מינימלית</label>
+                        <input type="number" id="minQuantity" name="minQuantity" min="1" placeholder="הזן כמות מינימלית"
+                            required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">הוסף מוצר</button>
+                        <button type="reset" class="btn btn-secondary">נקה טופס</button>
+                    </div>
+                </form>
+
+                <div class="product-message" id="productMessage" style="display: none;"></div>
+            </div>
+        </div>
+
+        <div id="supplier-orders" class="panel" style="display: none;">
+            <div class="section-title">
+                <i class="fas fa-clipboard-list"></i> הזמנות
+            </div>
+
+            <div class="panel-content">
+                <!-- טבלת הזמנות -->
+                <div class="orders-table-container">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>מס' הזמנה</th>
+                                <th>תאריך</th>
+                                <th>סטטוס</th>
+                                <th>מס' פריטים</th>
+                                <th>סכום</th>
+                                <th>מוצרים</th>
+                                <th>פעולות</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <!-- הנתונים ייטענו כאן דינמית -->
+                            <tr class="loading-row">
+                                <td colspan="6">
+                                    <div class="loading-spinner">
+                                        <i class="fas fa-spinner fa-spin"></i> טוען הזמנות...
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- הודעה כשאין הזמנות -->
+                <div id="noOrdersMessage" class="no-data-message" style="display: none;">
+                    <i class="fas fa-inbox"></i>
+                    <p>לא נמצאו הזמנות</p>
+                </div>
+
+                <!-- שגיאת טעינה -->
+                <div id="ordersErrorMessage" class="error-message" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>אירעה שגיאה בטעינת ההזמנות</p>
+                    <button id="retryOrdersButton" class="btn btn-secondary">
+                        <i class="fas fa-sync"></i> נסה שוב
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // פונקציה להחלפת פאנלים
+        function showPanel(panelId) {
+            document.querySelectorAll('.panel').forEach(panel => {
+                panel.style.display = 'none';
+            });
+
+            document.getElementById(panelId).style.display = 'block';
+
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            document.querySelector(`.nav-item[onclick="showPanel('${panelId}')"]`).classList.add('active');
+
+            // טעינת הזמנות אם מציגים את פאנל ההזמנות
+            if (panelId === 'supplier-orders') {
+                loadOrders();
+            }
+        }
+
+        // טעינת הזמנות מהשרת
+        function loadOrders() {
+            // הצגת אנימציית טעינה
+            const tableBody = document.getElementById('ordersTableBody');
+            tableBody.innerHTML = `
+        <tr class="loading-row">
+            <td colspan="7">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i> טוען הזמנות...
+                </div>
+            </td>
+        </tr>
+    `;
+
+            // מסתיר הודעות קודמות
+            hideMessages();
+
+            fetch('/order/orders', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        renderOrders(data.orders);
+                    } else {
+                        showOrdersError(data.message || 'שגיאה לא מוגדרת');
+                    }
+                })
+                .catch(error => {
+                    showOrdersError('אירעה שגיאה בטעינת ההזמנות: ' + error.message);
+                });
+        }
+
+        // הסתרת כל ההודעות הקשורות להזמנות
+        function hideMessages() {
+            document.getElementById('noOrdersMessage').style.display = 'none';
+            document.getElementById('ordersErrorMessage').style.display = 'none';
+            document.querySelector('.orders-table-container').style.display = 'block';
+        }
+
+        // הצגת הזמנות בטבלה
+        function renderOrders(orders) {
+            const tableBody = document.getElementById('ordersTableBody');
+            tableBody.innerHTML = '';
+
+            if (!orders || orders.length === 0) {
+                showNoOrdersMessage();
+                return;
+            }
+
+            // מסתיר הודעות שגיאה אם היו
+            hideMessages();
+
+            orders.forEach(order => {
+                const row = document.createElement('tr');
+
+                // בדיקה אם הנתונים מגיעים כ-items או Items
+                const items = order.items || (typeof order.Items === 'string' ? JSON.parse(order.Items) : order.Items);
+
+                if (!items) {
+                    console.error('לא נמצאו פריטים בהזמנה:', order);
+                    return;
+                }
+
+                // מוצרים יוצגו כטקסט מפורט
+                const productsDetails = items.map(item =>
+                    `${item.ProductName} (${item.Quantity} יח׳) - ₪${(item.Quantity * item.PricePerItem).toFixed(2)}`
+                ).join('<br>');
+
+                row.innerHTML = `
+            <td>${order.OrderID}</td>
+            <td>${formatDate(order.OrderDate)}</td>
+            <td>${order.Status}</td>
+            <td>${order.ItemCount}</td>
+            <td>₪${order.TotalAmount.toFixed(2)}</td>
+            <td>${productsDetails}</td>
+            <td>
+                ${order.Status === 'ממתינה' ?
+                        `<button class="btn btn-primary approve-order" data-order-id="${order.OrderID}">
+                        <i class="fas fa-check"></i> אשר הזמנה
+                    </button>` : ''}
+            </td>
+        `;
+
+                tableBody.appendChild(row);
+            });
+
+            // הוספת מאזין לכפתורי אישור
+            document.querySelectorAll('.approve-order').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const orderId = e.currentTarget.dataset.orderId;
+                    updateOrderStatus(orderId);
+                });
+            });
+
+            // מאפשר סינון הזמנות
+            applyOrdersFilter();
+        }
+
+        // עדכון סטטוס הזמנה
+        function updateOrderStatus(orderId) {
+            fetch(`/order/order/${orderId}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ status: 'בתהליך' })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('תקלה בעדכון סטטוס הזמנה');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        // מצא את השורה המתאימה וערוך אותה
+                        const row = document.querySelector(`.approve-order[data-order-id="${orderId}"]`).closest('tr');
+                        const statusCell = row.querySelector('td:nth-child(3)');
+                        statusCell.textContent = 'בתהליך';
+
+                        // הסר כפתור אישור
+                        row.querySelector('td:last-child').innerHTML = '';
+                    } else {
+                        alert(data.message || 'אירעה שגיאה בעדכון סטטוס ההזמנה');
+                    }
+                })
+                .catch(error => {
+                    console.error('שגיאה בעדכון סטטוס הזמנה:', error.message);
+                    alert('אירעה שגיאה בעדכון סטטוס ההזמנה');
+                });
+        }
+
+        // פונקציה לפורמט תאריך
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('he-IL', options);
+        }
+
+        // הצגת הודעה כשאין הזמנות
+        function showNoOrdersMessage() {
+            document.getElementById('noOrdersMessage').style.display = 'block';
+            document.querySelector('.orders-table-container').style.display = 'none';
+            document.getElementById('ordersErrorMessage').style.display = 'none';
+        }
+
+        // הצגת הודעת שגיאה בטעינת הזמנות
+        function showOrdersError(message) {
+            const errorMessageElement = document.getElementById('ordersErrorMessage');
+            errorMessageElement.querySelector('p').textContent = message;
+            errorMessageElement.style.display = 'block';
+            document.querySelector('.orders-table-container').style.display = 'none';
+            document.getElementById('noOrdersMessage').style.display = 'none';
+        }
+
+        // פונקציה לסינון הזמנות לפי סטטוס
+        function applyOrdersFilter(status = 'all') {
+            const rows = document.querySelectorAll('#ordersTableBody tr');
+
+            rows.forEach(row => {
+                const rowStatus = row.querySelector('td:nth-child(3)')?.textContent;
+
+                if (status === 'all' || status === rowStatus) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // עדכון מצב פעיל בכפתורי הסינון
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.status === status) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // בדיקה אם יש שורות מוצגות
+            let visibleRows = 0;
+            rows.forEach(row => {
+                if (row.style.display !== 'none') {
+                    visibleRows++;
+                }
+            });
+
+            // אם אין שורות מוצגות, הצג הודעה מתאימה
+            if (visibleRows === 0 && rows.length > 0) {
+                document.getElementById('noOrdersMessage').style.display = 'block';
+                document.getElementById('noOrdersMessage').querySelector('p').textContent =
+                    `לא נמצאו הזמנות ${status !== 'all' ? 'בסטטוס ' + status : ''}`;
+            } else {
+                document.getElementById('noOrdersMessage').style.display = 'none';
+            }
+        }
+
+        // הצגת הודעות למשתמש בטופס הוספת מוצר
+        function showMessage(message, type) {
+            const productMessage = document.getElementById('productMessage');
+            productMessage.innerHTML = message;
+            productMessage.className = 'product-message ' + type;
+            productMessage.style.display = 'block';
+
+            // גלילה להודעה
+            productMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            // הסתרת ההודעה אחרי 5 שניות רק אם זו הודעת הצלחה
+            if (type === 'success') {
+                setTimeout(() => {
+                    productMessage.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // טיפול בהוספת מוצר חדש
+        function handleAddProduct(e) {
+            e.preventDefault();
+
+            const productData = {
+                productName: document.getElementById('productName').value.trim(),
+                productPrice: parseFloat(document.getElementById('productPrice').value),
+                minQuantity: parseInt(document.getElementById('minQuantity').value)
+            };
+
+            // בדיקה בסיסית בלבד - שהשדות לא ריקים
+            if (!productData.productName || isNaN(productData.productPrice) || isNaN(productData.minQuantity)) {
+                showMessage('נא למלא את כל השדות בצורה תקינה', 'error');
+                return;
+            }
+
+            // הצגת אנימציית טעינה בכפתור
+            const submitButton = document.querySelector('#addProductForm button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> מוסיף...';
+            submitButton.disabled = true;
+
+            // שליחת הנתונים לשרת
+            fetch('/supplier/add-product', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ products: [productData] })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('תקלה בהוספת מוצר');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        showMessage('המוצר נוסף בהצלחה!', 'success');
+
+                        // ניקוי הטופס
+                        document.getElementById('addProductForm').reset();
+                    } else {
+                        showMessage(data.message || 'אירעה שגיאה בהוספת המוצר', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('שגיאה בהוספת מוצר:', error.message);
+                    showMessage('אירעה שגיאה בהוספת המוצר', 'error');
+                })
+                .finally(() => {
+                    // החזרת הכפתור למצב רגיל
+                    submitButton.innerHTML = originalButtonText;
+                    submitButton.disabled = false;
+                });
+        }
+
+        // אתחול כשהדף נטען
+        document.addEventListener('DOMContentLoaded', function () {
+            // הצגת פאנל הוספת מוצר כברירת מחדל
+            showPanel('add-product');
+
+            // טיפול בשליחת טופס הוספת מוצר
+            const addProductForm = document.getElementById('addProductForm');
+            if (addProductForm) {
+                addProductForm.addEventListener('submit', handleAddProduct);
+
+                // איפוס הודעות בלחיצה על כפתור הניקוי
+                const resetButton = addProductForm.querySelector('button[type="reset"]');
+                if (resetButton) {
+                    resetButton.addEventListener('click', function () {
+                        document.getElementById('productMessage').style.display = 'none';
+                    });
+                }
+            }
+
+            // הוספת מאזין לכפתורי סינון
+            document.querySelectorAll('.filter-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const status = this.dataset.status;
+                    applyOrdersFilter(status);
+                });
+            });
+
+            // הוספת מאזין לכפתור ניסיון מחדש
+            const retryButton = document.getElementById('retryOrdersButton');
+            if (retryButton) {
+                retryButton.addEventListener('click', loadOrders);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
